@@ -1,0 +1,69 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Local environment
+.env
+.env.*
+
+# Build and cache
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Jupyter and notebooks
+.ipynb_checkpoints/
+*.ipynb
+
+# Runtime outputs
+outputs/*
+!outputs/.gitkeep
+*.xlsx
+*.csv
+*.jsonl
+
+# Datasets and training runs
+datasets/
+dataset/
+vietnamese/
+runs/
+artifacts/
+
+# Model weights are not committed to GitHub.
+weights/**/*.pt
+weights/**/*.pth
+weights/**/*.onnx
+weights/**/*.engine
+weights/**/*.bin
+weights/vietocr_vintext/config.yml
+!weights/.gitkeep
+!weights/yolo_vintext/.gitkeep
+!weights/vietocr_vintext/.gitkeep
+
+# Archives and large local files
+*.zip
+*.rar
+*.7z
+
+# Ray / Serve
+.ray_tmp/
+ray_results/
+deployment/logs/
+deployment/ray_temp/
+deployment/.ray_tmp/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

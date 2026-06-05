@@ -1,0 +1,80 @@
+SMART SIGNBOARD OCR - OUTPUT CONTRACT
+=====================================
+
+Goal
+----
+Detect and digitize useful business information from Vietnamese signboard,
+banner, and poster images.
+
+Main pipeline
+-------------
+Upload image
+-> YOLO detects text regions
+-> Post-processing merges and sorts bounding boxes
+-> VietOCR recognizes text crops
+-> Signboard parser extracts structured fields
+-> User reviews and edits
+-> Excel export
+-> Search and lookup
+
+Default Excel output
+--------------------
+outputs/signboards.xlsx
+
+Column order
+------------
+id
+image_name
+store_name
+category
+phone
+address
+services
+raw_text
+confidence
+created_at
+note
+
+Field notes
+-----------
+id:
+  Auto-generated integer record id.
+
+image_name:
+  Uploaded file name or image source.
+
+store_name:
+  Candidate store or business name inferred from OCR text and visual layout.
+
+category:
+  Suggested business category. This is a parser hint, not a guaranteed label.
+  If confidence is low, use "Chua xac dinh" and let the user verify manually.
+
+phone:
+  Phone number extracted by regex and normalized when possible.
+
+address:
+  Address or location-like text detected from address keywords.
+
+services:
+  Main products or services mentioned on the signboard.
+
+raw_text:
+  Full OCR text after box sorting and line grouping. This field is kept for
+  review, debugging, and manual correction.
+
+confidence:
+  Mean OCR/detection confidence in the range 0.0 to 1.0.
+
+created_at:
+  Save timestamp in YYYY-MM-DD HH:MM:SS format.
+
+note:
+  User note, for example blurry image, unclear phone number, or needs retake.
+
+Parser principle
+----------------
+The parser is conservative:
+- Fill a field only when there is enough evidence.
+- Leave uncertain fields empty or marked for review.
+- Keep raw_text so the user can verify and correct the record.
