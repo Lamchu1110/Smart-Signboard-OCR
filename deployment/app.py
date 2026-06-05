@@ -1060,24 +1060,24 @@ def render_ocr_workspace():
         )
         detection_confidence = st.slider("Detection confidence threshold", 0.10, 0.95, 0.35, 0.05)
         st.markdown(
-            '<div class="control-help">NgÆ°á»¡ng confidence tá»‘i thiá»ƒu cá»§a YOLO Ä‘á»ƒ cháº¥p nháº­n má»™t vÃ¹ng chá»¯. '
-            "TÄƒng chá»‰ sá»‘ nÃ y giÃºp giáº£m box sai, nhÆ°ng cÃ³ thá»ƒ bá» sÃ³t chá»¯ nhá» hoáº·c má».</div>",
+            '<div class="control-help">Ngưỡng confidence tối thiểu để YOLO chấp nhận một vùng chữ. '
+            "Tăng chỉ số này giúp giảm box sai, nhưng có thể bỏ sót chữ nhỏ hoặc mờ.</div>",
             unsafe_allow_html=True,
         )
         merge_bbox = st.toggle("Merge bounding boxes", value=False)
         st.markdown(
-            '<div class="control-help">Gá»™p cÃ¡c box chá»¯ gáº§n nhau thÃ nh má»™t dÃ²ng hoáº·c cá»¥m chá»¯ trÆ°á»›c khi OCR. '
-            "Há»¯u Ã­ch khi biá»ƒn hiá»‡u bá»‹ tÃ¡ch má»™t tá»« thÃ nh nhiá»u box nhá».</div>",
+            '<div class="control-help">Gộp các box chữ gần nhau thành một dòng hoặc cụm chữ trước khi OCR. '
+            "Hữu ích khi biển hiệu bị tách một từ thành nhiều box nhỏ.</div>",
             unsafe_allow_html=True,
         )
         sort_bbox = st.toggle("Sort bounding boxes", value=True)
         st.markdown(
-            '<div class="control-help">Sáº¯p xáº¿p vÃ¹ng chá»¯ theo thá»© tá»± Ä‘á»c Ä‘á»ƒ raw OCR text dá»… parser hÆ¡n.</div>',
+            '<div class="control-help">Sắp xếp vùng chữ theo thứ tự đọc để raw OCR text dễ parser hơn.</div>',
             unsafe_allow_html=True,
         )
         show_bbox = st.toggle("Show bounding boxes", value=True)
         st.markdown(
-            '<div class="control-help">Báº­t hoáº·c táº¯t khung bounding box trÃªn áº£nh káº¿t quáº£.</div>',
+            '<div class="control-help">Bật hoặc tắt khung bounding box trên ảnh kết quả.</div>',
             unsafe_allow_html=True,
         )
         run_ocr = st.button("Run OCR", use_container_width=True)
@@ -1312,7 +1312,7 @@ def render_search():
         category = st.selectbox("Category", category_options)
     with col_c:
         min_confidence = st.slider("Minimum confidence", 0.0, 1.0, 0.0, 0.05)
-        st.caption("Chá»‰ hiá»ƒn thá»‹ báº£n ghi cÃ³ OCR confidence báº±ng hoáº·c cao hÆ¡n giÃ¡ trá»‹ nÃ y.")
+        st.caption("Chỉ hiển thị bản ghi có OCR confidence bằng hoặc cao hơn giá trị này.")
 
     filtered = records.copy()
     if keyword.strip():
@@ -1338,20 +1338,20 @@ def render_settings():
     with col_a:
         st.text_input("YOLO model path", value=os.path.join(BASE_DIR, "weights", "yolo_vintext", "best.pt"))
         st.slider("Detection confidence", 0.10, 0.95, 0.35, 0.05)
-        st.caption("NgÆ°á»¡ng confidence tá»‘i thiá»ƒu khi YOLO phÃ¡t hiá»‡n vÃ¹ng chá»¯.")
+        st.caption("Ngưỡng confidence tối thiểu khi YOLO phát hiện vùng chữ.")
         st.toggle("Merge bbox", value=False)
-        st.caption("Gá»™p cÃ¡c box gáº§n nhau thÃ nh vÃ¹ng chá»¯ cáº¥p dÃ²ng trÆ°á»›c khi nháº­n dáº¡ng.")
+        st.caption("Gộp các box gần nhau thành vùng chữ cấp dòng trước khi nhận dạng.")
         st.toggle("Use GPU", value=True)
-        st.caption("Sá»­ dá»¥ng CUDA GPU khi pipeline model tháº­t Ä‘Æ°á»£c káº¿t ná»‘i.")
+        st.caption("Sử dụng CUDA GPU khi pipeline model thật được kết nối.")
     with col_b:
         st.text_input(
             "VietOCR model path",
             value=os.path.join(BASE_DIR, "weights", "vietocr_vintext", "transformerocr.pth"),
         )
         st.slider("IoU threshold", 0.10, 0.90, 0.45, 0.05)
-        st.caption("NgÆ°á»¡ng chá»“ng láº¥p dÃ¹ng khi lá»c hoáº·c gá»™p cÃ¡c box bá»‹ trÃ¹ng.")
+        st.caption("Ngưỡng chồng lấp dùng khi lọc hoặc gộp các box bị trùng.")
         st.toggle("Sort bbox", value=True)
-        st.caption("Sáº¯p xáº¿p box tá»« trÃªn xuá»‘ng dÆ°á»›i, trÃ¡i sang pháº£i trÆ°á»›c khi parser.")
+        st.caption("Sắp xếp box từ trên xuống dưới, trái sang phải trước khi parser.")
     st.info("OCR Workspace now uses the real YOLO + VietOCR pipeline in Real model mode. Some advanced settings remain UI-only until the next tuning step.")
     st.markdown("</div>", unsafe_allow_html=True)
 
